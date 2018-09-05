@@ -1,2 +1,7 @@
-# objectify
-A ruby gem that allows the creation of dynamic object definitions and instances
+# Installation
+
+`gem install omg_objectify`
+
+# Usage
+
+See [example/thing.rb](example/thing.rb)
