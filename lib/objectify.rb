@@ -22,7 +22,7 @@ module Objectify
     def object(name, attrs:[])
       klass = Class.new Object
       class_name = String(name).camelize
-      name_string = String(name)
+      name_string = class_name.camelize
 
       attrs.each do |attr|
         if attr.is_a? Hash
