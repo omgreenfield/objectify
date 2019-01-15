@@ -7,11 +7,11 @@ module Objectify
 
   class << self
     def register_object name 
-      nameString = String(name)
+      name_string = String(name)
       self.class_eval <<-EOS
         class << self
-          def #{nameString.pluralize}
-            @@#{nameString.pluralize} ||= []
+          def #{name_string.pluralize}
+            @@#{name_string.pluralize} ||= []
           end
         end
       EOS
@@ -21,8 +21,8 @@ module Objectify
   module ClassMethods
     def object(name, attrs:[])
       klass = Class.new Object
-      className = String(name).camelize
-      nameString = String(name)
+      class_name = String(name).camelize
+      name_string = String(name)
 
       attrs.each do |attr|
         if attr.is_a? Hash
@@ -41,15 +41,15 @@ module Objectify
       
       self.class_eval <<-EOS
         class << self
-          def #{nameString}(#{attrs.map{ |a| "#{String(a)}: nil" }.join(', ')})
-            item = #{className}.new(#{attrs.map{ |a| "#{String(a)}: #{String(a)}" }.join(', ')})
-            Objectify.#{nameString.pluralize}.push(item)
+          def #{name_string}(#{attrs.map{ |a| "#{String(a)}: nil" }.join(', ')})
+            item = #{class_name}.new(#{attrs.map{ |a| "#{String(a)}: #{String(a)}" }.join(', ')})
+            Objectify.#{name_string.pluralize}.push(item)
             item
           end
         end
       EOS
 
-      self.const_set className, klass
+      self.const_set class_name, klass
       Objectify::register_object name
     end
   end
